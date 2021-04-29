@@ -263,5 +263,5 @@ if __name__ == "__main__":
 #    render_tiles(bbox, mapfile, tile_dir, 1, 11 , "Europe+")
 
     bbox = (8.4213643278, 53.3949251389, 10.3242585128, 53.9644376366)
-    render_tiles(bbox, '/tmp/openstreetmap-carto/osm.xml', '/tmp/tiles/', 1, 16, "Hamburg")
+    render_tiles(bbox, '/tmp/map_style.xml', '/tmp/tiles/', 1, 16, "Hamburg")
     os._exit(0)

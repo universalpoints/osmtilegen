@@ -7,9 +7,14 @@ set -xe
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     sudo apt-key add -
 
+sudo sh -c 'sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe"'
+sudo sh -c 'sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"'
+
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" >> /etc/apt/sources.list.d/postgresql.list'
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list'
+
 sudo apt-get update
-sudo apt-get -y install postgresql-10 postgresql-10-postgis-2.5  unzip
+sudo apt-get -y install postgresql-13 postgresql-13-postgis-3  unzip
 
 sudo -u postgres createuser gisuser
 
@@ -54,11 +59,14 @@ carto project.mml >osm.xml
 
 cd /tmp
 
+echo "Old freetype version:"
+dpkg -l|grep freetype6
+
 sudo add-apt-repository -y ppa:no1wantdthisname/ppa
-
 sudo apt-get update
-
-sudo add-apt-repository -y ppa:talaj/osm-mapnik
+sudo apt-get install -y libfreetype6 libfreetype6-dev
+echo "Updated freetype version:"
+dpkg -l|grep freetype6
 
 sudo apt-get update
 
@@ -76,6 +84,9 @@ cd noto
 
 # Grab some extra noto fonts from Google
 
+# install for fc-cache
+sudo apt-get install -y fontconfig
+
 wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
 
 unzip Noto-hinted.zip
@@ -92,7 +103,7 @@ cd /tmp/openstreetmap-carto
 
 sudo apt-get install -y mapnik-utils
 
-./scripts/get-shapefiles.py
+./scripts/get-external-data.py
 
 sudo su - postgres -c "cd /tmp/openstreetmap-carto; osm2pgsql -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d gis ../hamburg-latest.osm" 
 

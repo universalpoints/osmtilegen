@@ -10,6 +10,8 @@ while ! nc -z $HOSTNAME 22; do
   sleep 0.5 # wait for half a second before check again
 done
 
+scp -oStrictHostKeyChecking=no map_styles/gb_test_1.xml 'ubuntu@'$HOSTNAME:/tmp/map_style.xml
+
 scp -oStrictHostKeyChecking=no gen-tiles.py 'ubuntu@'$HOSTNAME:/tmp/gen-tiles.py
 
 scp -oStrictHostKeyChecking=no mapgen.sh 'ubuntu@'$HOSTNAME:/home/ubuntu
