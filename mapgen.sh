@@ -146,6 +146,8 @@ wget https://planet.openstreetmap.org/planet/planet-latest.osm.bz2
 # bzip2 -d hamburg-latest.osm.bz2
 bzip2 -d planet-latest.osm.bz2
 
+rm planet-latest.osm.bz2
+
 wget https://svn.openstreetmap.org/applications/rendering/mapnik/generate_image.py
 
 wget https://svn.openstreetmap.org/applications/rendering/mapnik/generate_tiles.py
