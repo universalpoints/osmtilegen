@@ -18,7 +18,7 @@ DEG_TO_RAD = pi/180
 RAD_TO_DEG = 180/pi
 
 # Default number of rendering threads to spawn, should be roughly equal to number of CPU cores available
-NUM_THREADS = 16
+NUM_THREADS = 36
 
 
 def minmax (a,b,c):
@@ -217,9 +217,9 @@ if __name__ == "__main__":
     #
     # Start with an overview
     # World
-#    bbox = (-180.0,-90.0, 180.0,90.0)
+    bbox = (-180.0,-90.0, 180.0,90.0)
 
-#    render_tiles(bbox, mapfile, tile_dir, 0, 5, "World")
+    render_tiles(bbox, '/tmp/Guestbook/map_style.xml', '/tmp/tiles/', 0, 20, "World")
 
 #    minZoom = 10
 #    maxZoom = 16
@@ -262,6 +262,6 @@ if __name__ == "__main__":
 #    bbox = (1.0,10.0, 20.6,50.0)
 #    render_tiles(bbox, mapfile, tile_dir, 1, 11 , "Europe+")
 
-    bbox = (8.4213643278, 53.3949251389, 10.3242585128, 53.9644376366)
-    render_tiles(bbox, '/tmp/map_style.xml', '/tmp/tiles/', 1, 16, "Hamburg")
+    # bbox = (8.4213643278, 53.3949251389, 10.3242585128, 53.9644376366)
+    # render_tiles(bbox, '/tmp/Guestbook/map_style.xml', '/tmp/tiles/', 1, 16, "Hamburg")
     os._exit(0)

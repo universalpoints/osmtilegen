@@ -4,14 +4,17 @@
 			"DeviceName": "/dev/sda1",
 			"Ebs": {
 				"DeleteOnTermination": true,
-				"VolumeSize": 50,
+				"VolumeSize": 1000,
 				"VolumeType": "gp2"
 			}
 		}
 	],
 	"EbsOptimized": true,
 	"ImageId": "ami-028abdd7f3567401e",
-	"InstanceType": "c4.4xlarge",
+	"IamInstanceProfile": {
+		"Name": "EC2_World_Map_Builder"
+	},
+	"InstanceType": "c5.9xlarge",
 	"KeyName": "tommy",
 	"Monitoring": {
 		"Enabled": false
