@@ -23,7 +23,7 @@ ssh -oStrictHostKeyChecking=no -oServerAliveInterval=100 'ubuntu@'$HOSTNAME "noh
 
 echo "Waiting for map generation to complete..."
 
-while ! ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME test -f /tmp/tiles.tar; do
+while ! ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME test -f /tmp/done.txt; do
     sleep 30
 done
 

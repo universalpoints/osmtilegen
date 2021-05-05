@@ -122,6 +122,19 @@ local   replication     all                                     trust
 host    replication     all             127.0.0.1/32            trust
 host    replication     all             ::1/128                 trust
 EOF'
+
+sudo sh -c 'cat << EOF > /etc/postgresql/13/main/conf.d/osm_tuning.conf
+shared_buffers = 1GB
+work_mem = 50MB
+maintenance_work_mem = 10GB
+autovacuum_work_mem = 2GB
+wal_level = minimal
+checkpoint_timeout = 60min
+max_wal_size = 10GB
+checkpoint_completion_target = 0.9
+max_wal_senders = 0
+random_page_cost = 1.0
+EOF'
 sudo -u postgres psql --username=postgres --dbname=postgres -c "SELECT pg_reload_conf();"
 
 sudo -u postgres createuser osmuser
@@ -212,7 +225,7 @@ cd /tmp
 
 sudo apt-get install -y mapnik-utils
 
-sudo su - postgres -c "cd /tmp; osm2pgsql -G --hstore -U osmuser -d osm planet-latest.osm" 
+sudo su - postgres -c "cd /tmp; osm2pgsql --cache=64000 -G --hstore -U osmuser -d osm planet-latest.osm" 
 
 sudo -u postgres mkdir -p /tmp/tiles
 
@@ -220,8 +233,4 @@ sudo unzip /tmp/Guestbook.zip -d /tmp
 
 sudo -u postgres python gen-tiles.py
 
-# tar it all up for downloading
-
-cd /tmp
-
-tar cf tiles.tar tiles
+echo "finished" > /tmp/done.txt
